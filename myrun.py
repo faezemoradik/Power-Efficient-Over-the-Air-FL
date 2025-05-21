@@ -4,12 +4,11 @@ import argparse
 import numpy as np
 import pickle
 
-# MSE_bound for mnist changed to 0.085
 
 for seed in [0]:
-    args = argparse.Namespace(learning_rate= 0.2, P_zero = 15, alpha=0.05, delta=0.05, 
-                                            beta = 0.0, MSE_bound= 0.4, batch_size=10, 
-                                            num_epoch= 5, myseed= seed, epsilon=0.0, 
-                                            dataset='CIFAR10', method='BoundedMSE')
+    args = argparse.Namespace(learning_rate= 0.95, P_zero = 15, alpha=0.55, delta=6.0, 
+                                            beta = 0.0, MSE_bound= 0.085, batch_size=5420, 
+                                            num_epoch= 20, myseed= seed, epsilon=0.0, 
+                                            dataset='MNIST', method='PoMFL')
 
     main(args)   
