@@ -29,8 +29,7 @@ def Channel_Estimation(num_of_clients, num_of_antennas, path_loss, epsilon):
 
   return channel_estimation
 #-------------------------------------------------------------
-def Channel_Condition(r_min, r_max, num_of_clients, num_of_antennas, clients_num_sample, epsilon):
-  clients_distances = clients_distance(r_min, r_max, num_of_clients)
+def Channel_Condition(clients_distances, num_of_clients, num_of_antennas, clients_num_sample, epsilon):
   scaled_channel_estimation_matrix= np.zeros((num_of_clients, num_of_antennas))+ 1j*np.zeros((num_of_clients, num_of_antennas))
 
   c1= 3.2*((np.log10(11.75*1))**2)-4.97

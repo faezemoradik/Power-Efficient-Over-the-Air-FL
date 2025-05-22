@@ -8,7 +8,7 @@ from GSDSandMMSE import GSDS, ReceiveTransmitBeamforming, MMSE
 # from BoundedBias import PowerMinimizationwithBoundedBias
 from BoundedMSE import PowerMinimizationwithBoundedMSE
 from ProposedApproach import OurProposedMethod
-from channel import Channel_Condition
+from channel import Channel_Condition, clients_distance
 
 
 ##################################################
@@ -212,13 +212,14 @@ def NonIdealFedSGD(x_train_dict, y_train_dict, train_loader, test_loader, model_
   test_acc_list[0] = test_acc
 
   print("Epoch", str(0), "| Test loss: ", test_loss, "Test acc :", test_acc, "Train loss: " , train_loss, "Train acc :", train_acc )
+  clients_distances = clients_distance(r_min, r_max, num_of_clients)
 
   for i in range(num_epoch):
     for j in range(num_of_comm_round_in_each_epoch):
       print('Communication round', str(j+1), ':')
 
       ### random channel generation
-      channel_estimation_matrix, true_channel_matrix, scaled_channel_estimation_matrix, path_losses = Channel_Condition(r_min, r_max, num_of_clients, num_of_antennas, clients_num_sample, epsilon)
+      channel_estimation_matrix, true_channel_matrix, scaled_channel_estimation_matrix, path_losses = Channel_Condition(clients_distances, num_of_clients, num_of_antennas, clients_num_sample, epsilon)
 
       model_dict= send_main_model_to_nodes_and_update_model_dict(main_model, model_dict, num_of_clients)
       grads_dict= create_grads_dict(num_of_clients, model_dict, criterion_dict, optimizer_dict, x_train_dict, y_train_dict, j, batch_size)
